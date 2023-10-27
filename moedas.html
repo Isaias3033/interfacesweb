@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>CONVERSOR DE MEDIDAS</title>
+        <style>
+            body {
+                font-family: Arial, sans-serif;
+                margin: 0;
+                padding: 0;
+                background-color: #050001;
+            }
+            .menu {
+                background-color: #ED0278;
+                color: #fff;
+                padding: 20px;
+                display: flex;
+                justify-content: center;
+            }
+    
+            .menu-item {
+                margin-right: 10px;
+            }
+    
+            .menu-item a {
+                color: #fff;
+                text-decoration: none;
+                font-weight: bold;
+                font-size: 22px;
+                padding: 5px 10px;
+                transition: background-color 0.3s ease;
+                border-radius: 5px;
+            }
+    
+            .menu-item a:hover {
+                background-color: #c50563;
+            }
+    
+            .page {
+                max-width: 800px;
+                margin: 20px auto;
+                padding: 20px;
+                background-color: #0c0b0b;
+                border: 1px solid #ccc;
+                border-radius: 20px;
+                color: #fff;
+            }
+    
+            .title {
+                color: #ED0278;
+                text-align: center;
+            }
+    
+            .form-container {
+                margin-top: 20px;
+            }
+    
+            .form-group {
+                display: flex;
+                align-items: center;
+                margin-bottom: 10px;
+            }
+    
+            .form-label {
+                flex: 0 0 200px;
+            }
+    
+            .form-input {
+                flex: 1;
+                padding: 5px;
+                border: 1px solid #ccc;
+                border-radius: 5px;
+            }
+    
+            .form-button {
+                padding: 10px 20px;
+                background-color: #ED0278;
+                color: #fff;
+                border: none;
+                border-radius: 5px;
+                cursor: pointer;
+            }
+    
+            .result {
+                margin-top: 20px;
+                padding: 10px;
+                background-color: #1c1b1b;
+                border: 1px solid #ccc;
+                border-radius: 5px;
+            }
+            .check {
+                flex: 1;
+                padding: 5px;
+                border: 1px solid #ccc;
+                border-radius: 5px;
+                margin-left: -580px;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="menu">
+            <div class="menu-item"><a href="1menu.html">HOME</a></div>
+        </div>
+        <div class="page">
+            <h1 class="title">CONVERSOR DE MOEDAS</h1>
+    
+            <div class="form-container">
+                <div class="form-group">
+                    <label class="form-label">Valor:</label>
+                    <input type="number" id="input-value" class="form-input">
+                </div>
+    
+                <div class="form-group">
+                    <label class="form-label">Moeda de Origem:</label>
+                    <select id="select-from" class="form-input">
+                        <option value="BRL">Real (BRL)</option>
+                        <option value="USD">Dólar (USD)</option>
+                        <option value="EUR">Euro (EUR)</option>
+                    </select>
+                </div>
+    
+                <div class="form-group">
+                    <label class="form-label">Moeda de Destino:</label>
+                    <select id="select-to" class="form-input">
+                        <option value="BRL">Real (BRL)</option>
+                        <option value="USD">Dólar (USD)</option>
+                        <option value="EUR">Euro (EUR)</option>
+                    </select>
+                </div>
+    
+                <div class="form-group">
+                    <label class="form-label">Cotação Manual:</label>
+                    <input type="checkbox"" id="checkbox-manual" class="check">
+                </div>
+    
+                <div id="manual-rate-container" style="display: none;">
+                    <div class="form-group">
+                        <label class="form-label">Cotação:</label>
+                        <input type="number" id="input-rate" class="form-input">
+                    </div>
+                </div>
+    
+                <button id="btn-convert" class="form-button">Converter</button>
+    
+                <div id="result-container" class="result" style="display: none;"></div>
+            </div>
+        </div>
+    
+        <script>
+        const inputEl = document.getElementById('input-value');
+        const selectFromEl = document.getElementById('select-from');
+        const selectToEl = document.getElementById('select-to');
+        const checkboxEl = document.getElementById('checkbox-manual');
+        const manualRateContainerEl = document.getElementById('manual-rate-container');
+        const inputRateEl = document.getElementById('input-rate');
+        const btnConvertEl = document.getElementById('btn-convert');
+        const resultContainerEl = document.getElementById('result-container');
+
+        checkboxEl.addEventListener('change', function() {
+            if (checkboxEl.checked) {
+                manualRateContainerEl.style.display = 'block';
+            } else {
+                manualRateContainerEl.style.display = 'none';
+            }
+        });
+
+        btnConvertEl.addEventListener('click', function() {
+            const value = parseFloat(inputEl.value);
+            const fromCurrency = selectFromEl.value;
+            const toCurrency = selectToEl.value;
+
+            let rate;
+            if (checkboxEl.checked) {
+                rate = parseFloat(inputRateEl.value);
+            } else {
+                // Cotações baseadas em 28/06/2023
+                const rates = {
+                    BRL: { USD: 0.20, EUR: 0.17 },
+                    USD: { BRL: 5.00, EUR: 0.85 },
+                    EUR: { BRL: 6.00, USD: 1.18 },
+                };
+                rate = rates[fromCurrency][toCurrency];
+            }
+
+            const convertedValue = value * rate;
+
+            resultContainerEl.innerHTML = `${value.toFixed(2)} ${fromCurrency} = ${convertedValue.toFixed(2)} ${toCurrency}`;
+            resultContainerEl.style.display = 'block';
+        });
+        </script>
+    </body>
+    </html>
