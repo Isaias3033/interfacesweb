@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CONVERSOR DE MEDIDAS</title>
+    <style>
+    body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        background-color: #050001;
+    }
+
+    .menu {
+        background-color: #ED0278;
+        color: #fff;
+        padding: 20px;
+        display: flex;
+        justify-content: center;
+    }
+
+    .menu-item {
+        margin-right: 10px;
+    }
+
+    .menu-item a {
+        color: #fff;
+        text-decoration: none;
+        font-weight: bold;
+        font-size: 22px;
+        padding: 5px 10px;
+        transition: background-color 0.3s ease;
+        border-radius: 5px;
+    }
+
+    .menu-item a:hover {
+        background-color: #c50563;
+    }
+
+    .page {
+        max-width: 800px;
+        margin: 20px auto;
+        padding: 20px;
+        background-color: #0c0b0b;
+        border: 1px solid #ccc;
+        border-radius: 20px;
+    }
+
+    .title {
+        color: #ED0278;
+        text-align: center;
+    }
+
+    .form-container {
+        margin-top: 20px;
+    }
+
+    .form-container h3 {
+        color: #fff;
+        margin-bottom: 10px;
+    }
+
+    .form-container label {
+        display: block;
+        color: #fff;
+        margin-bottom: 5px;
+    }
+
+    .form-container input,
+    .form-container select {
+        width: 100%;
+        padding: 8px;
+        border-radius: 5px;
+        border: 1px solid #ccc;
+    }
+
+    .form-container button {
+        background-color: #ED0278;
+        color: #fff;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 5px;
+        font-weight: bold;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+    }
+
+    .form-container button:hover {
+        background-color: #c50563;
+    }
+
+    .form-container label[for="resultado"] {
+        display: block;
+        margin-top: 10px;
+    }
+
+    .form-container #resultado {
+        color: #fff;
+        font-weight: bold;
+    }
+    .valor {
+        margin-right: 17px;
+    }
+    .botao {
+        margin-top: 15px;
+    }
+    </style>
+</head>
+<body>
+    <div class="menu">
+        <div class="menu-item"><a href="1menu.html">HOME</a></div>
+    </div>
+    <div class="page">
+        <h1 class="title">CONVERSOR DE COMPRIMENTO</h1>
+
+        <div class="form-container">
+            <div class="valor">
+                <label for="valor">Valor:</label>
+                <input type="number" id="valor">
+            </div>
+            <div>
+                <label for="unidadeOrigem">De:</label>
+                <select id="unidadeOrigem">
+                    <option value="cm">Centímetros (cm)</option>
+                    <option value="m">Metros (m)</option>
+                    <option value="km">Quilômetros (km)</option>
+                </select>
+            </div>
+            <div>
+                <label for="unidadeDestino">Para:</label>
+                <select id="unidadeDestino">
+                    <option value="cm">Centímetros (cm)</option>
+                    <option value="m">Metros (m)</option>
+                    <option value="km">Quilômetros (km)</option>
+                </select>
+            </div>
+            <button class="botao" onclick="converterMedida()">Converter</button>
+            <div>
+                <label for="resultado">Resultado:</label>
+                <span id="resultado"></span>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
+<script>
+    function converterMedida() {
+        // Obtém os valores dos campos de entrada
+        var valor = parseFloat(document.getElementById("valor").value);
+        var unidadeOrigem = document.getElementById("unidadeOrigem").value;
+        var unidadeDestino = document.getElementById("unidadeDestino").value;
+
+        // Executa a conversão de medidas
+        var resultado;
+        if (unidadeOrigem === "cm" && unidadeDestino === "m") {
+            resultado = valor / 100;
+        } else if (unidadeOrigem === "cm" && unidadeDestino === "km") {
+            resultado = valor / 100000;
+        } else if (unidadeOrigem === "m" && unidadeDestino === "cm") {
+            resultado = valor * 100;
+        } else if (unidadeOrigem === "m" && unidadeDestino === "km") {
+            resultado = valor / 1000;
+        } else if (unidadeOrigem === "km" && unidadeDestino === "cm") {
+            resultado = valor * 100000;
+        } else if (unidadeOrigem === "km" && unidadeDestino === "m") {
+            resultado = valor * 1000;
+        } else {
+            resultado = valor; // Caso as unidades sejam iguais, o resultado será igual ao valor original
+        }
+
+        // Exibe o resultado na página
+        document.getElementById("resultado").innerHTML = resultado.toFixed(2);
+    }
+</script>
